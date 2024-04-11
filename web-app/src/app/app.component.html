@@ -1,26 +1,50 @@
 <div class="container body-content">
-  <div class="jumbotron">
-    <h1>BrainWare Orders</h1>
-    <p class="lead">This is the BrainWare orders page! Welcome</p>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <h2>Your Orders</h2>
-      <div id="orders"></div>
+
+    <h1> Order History <span class="badge badge-info">{{orders.length}}</span></h1>
+    <div class="container order-list">
+        <div class="card order-details" *ngFor="let order of orders">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-1">
+                        <h3>#{{order.id}}</h3>
+                    </div>
+                    <div class="col-md-8">
+                        <h4>{{order.description}}</h4>
+                    </div>
+                    <div class="col-md-3">
+                        <h3><b>${{order.totalPrice | number : '.2-2'}}</b></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let orderProduct of order.products">
+                                    <td>{{orderProduct.name}}</td>
+                                    <td>{{orderProduct.price}}</td>
+                                    <td>{{orderProduct.quantity}}</td>
+                                    <td>{{orderProduct.price * orderProduct.quantity | number : '.2-2'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <ul>
-    <li *ngFor="let order of orders">
-      {{order.dscription}} (Total: ${{order.orderTotal}})
-      <ul>
-        <li *ngFor="let orderProduct of order.orderProducts">
-          {{orderProduct.product.name}} ({{orderProduct.quantity}} &#64; ${{orderProduct.price}}/ea)
-        </li>
-      </ul>
-    </li>
-  </ul>
-  <hr />
-  <footer>
-    <p>&copy; {{year}} - BrainWare, Inc</p>
-  </footer>
+    <hr />
+    <footer>
+        <p>&copy; {{year}} - BrainWare, Inc</p>
+    </footer>
 </div>
